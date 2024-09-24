@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Landing Page with Vue and Bootstrap</title>
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Vue.js CDN -->
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">MySite</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="bg-primary text-white text-center py-5" style="margin-top: 56px;">
+      <div class="container">
+        <h1>Welcome to MySite</h1>
+        <p class="lead">We provide the best solutions for your business</p>
+        <a href="#features" class="btn btn-light btn-lg">Learn More</a>
+      </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-4" v-for="(feature, index) in features" :key="index">
+            <div class="card border-primary">
+              <div class="card-body">
+                <h5 class="card-title">{{ feature.title }}</h5>
+                <p class="card-text">{{ feature.description }}</p>
+                <a href="#" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-light py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Contact Us</h2>
+            <p>Fill out the form below to get in touch.</p>
+            <div v-if="formSubmitted" class="alert alert-success mt-3" role="alert">
+                Thank you, {{ submittedName }}! Your message has been sent.
+              </div>
+            <form @submit.prevent="submitForm">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" v-model="formData.name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" v-model="formData.email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" v-model="formData.message" rows="4" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            
+          </div>
+          <div class="col-md-6">
+            <h2>Our Location</h2>
+            <p>1234 Business Avenue, Suite 100</p>
+            <!-- Optional: Embed Google Map or include an image -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+      <div class="container">
+        <p>&copy; 2024 MySite. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vue.js Script -->
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          features: [
+            { title: 'Feature One', description: 'Description of the first feature.' },
+            { title: 'Feature Two', description: 'Description of the second feature.' },
+            { title: 'Feature Three', description: 'Description of the third feature.' }
+          ],
+          formData: {
+            name: '',
+            email: '',
+            message: ''
+          },
+          formSubmitted: false
+        }
+      },
+      methods: {
+        submitForm() {
+          // Simula o envio do formulário e marca como enviado
+          this.submittedName = this.formData.name;
+          this.formSubmitted = true;
+
+          // Limpa o formulário
+          this.formData = {
+            name: '',
+            email: '',
+            message: ''
+          };
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
